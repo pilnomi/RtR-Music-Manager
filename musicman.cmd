@@ -1,7 +1,7 @@
 @echo off
 set "MusicFolder=%userprofile%\Music"
 set "GameMusicFolder=."
-set "RefreshMinutes=10"
+set "RefreshMinutes=60"
 
 :loop
 echo *****************************************
@@ -37,7 +37,7 @@ ECHO Total game files(s) : !gidx!
 
 
 for /L %%i in (1,1,%gidx%) do call :processfile %%i
-echo ***user music has been randomly to game music files***
+echo ***user music has been randomly mapped to game music files***
 echo ***Waiting %RefreshMinutes% minutes to refresh music, press CTRL+C to abort***
 for /L %%h in (1,1,%RefreshMinutes%) do (timeout /t 60 /NOBREAK > nul)
 goto loop                           					    //Return to loop marker
@@ -46,7 +46,8 @@ goto End
 :processfile
 	SET /a "_rand=((%RANDOM%*%idx%/32768)+1)"
 	REM ECHO Random number "%_rand%"
-	del "!GameFileName[%1]!" > nul
+	echo "!FileName[%_rand%]!" 
+	REM del "!GameFileName[%1]!" > nul
 	copy "!FileName[%_rand%]!" "!GameFileName[%1]!" > nul
 goto :eof
 
